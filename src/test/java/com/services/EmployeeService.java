@@ -5,7 +5,6 @@ import com.models.Employees;
 import io.restassured.http.ContentType;
 import io.restassured.response.ValidatableResponse;
 import org.apache.http.HttpStatus;
-import org.testng.Assert;
 
 import java.io.IOException;
 import java.net.URL;
@@ -62,9 +61,9 @@ public class EmployeeService {
                 .log().all()
                 .assertThat()
                 .statusCode(HttpStatus.SC_OK);// Usually 204 - No content for PUT with respect to response nothing to return
-        Employees actualEmployees = response1.extract().body(). as(Employees.class);
-        System.out.println(actualEmployees);
-        Assert.assertEquals(actualEmployees,employees,"Employees  details updatad");
+//        Employees actualEmployees = response1.extract().body(). as(Employees.class);
+//        System.out.println(actualEmployees);
+//        Assert.assertEquals(actualEmployees,employees,"Employees  details updatad");
 
 
 
