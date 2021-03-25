@@ -2,8 +2,11 @@ package com.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.models.Employees;
+import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
 import io.restassured.response.ValidatableResponse;
+import io.restassured.specification.RequestSpecification;
 import org.apache.http.HttpStatus;
 
 import java.io.IOException;
@@ -15,6 +18,18 @@ public class EmployeeService {
     private String baseURI ="http://jsonplaceholder.typicode.com";
     private String basePath = "/posts";
     private ObjectMapper mapper = new ObjectMapper();
+    private RequestSpecification specification;//for base URI Base path ,
+    // content type things which we can do in common the given has Request specification return type
+
+    public EmployeeService(){
+
+        specification= new RequestSpecBuilder()
+                        .setBaseUri(baseURI)
+                        .setBasePath(basePath)
+                        .setContentType(ContentType.JSON)
+                        .log(LogDetail.ALL)
+                        .build();
+    }
     public void saveNewEmployee(Employees employees){
         given().baseUri(baseURI)
                 .basePath(basePath)
@@ -65,7 +80,14 @@ public class EmployeeService {
 //        System.out.println(actualEmployees);
 //        Assert.assertEquals(actualEmployees,employees,"Employees  details updatad");
 
+    }
 
+    public void deleteEmployee(int employeeId){
+                given().spec(specification)
+                .when().delete("/"+employeeId)
+                 .then()
+                 .log().all()
+                 .assertThat().statusCode(HttpStatus.SC_OK);//usually 204 for delete
 
 
 
