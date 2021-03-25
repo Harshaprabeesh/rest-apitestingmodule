@@ -13,7 +13,7 @@ private ObjectMapper mapper  = new ObjectMapper();
 //moved to common class service
 //private String baseURI ="http://jsonplaceholder.typicode.com";
 //private String basePath = "/posts";
- @Test(enabled = false)
+ @Test(priority = 1)
     public void saveANewEmployee() {
 
         String file ="employee.json";
@@ -55,8 +55,7 @@ private ObjectMapper mapper  = new ObjectMapper();
 
 
   }
-
-@Test
+@Test(enabled  =false)
     public void updateEmployee(){
     String file ="employee.json";
     Employees employees= employeeService.readAFile(file);
@@ -65,16 +64,23 @@ private ObjectMapper mapper  = new ObjectMapper();
 //    updateEmployee.setTitle("update Title");
 //    updateEmployee.setBody("Update Body");
 //    updateEmployee.setId(1);
+
     Employees updateEmployee = Employees.builder()
                                 .body("Update Title second time")
                                 .title("update Title second time")
                                 .build();
     int employeeId = 1;
     employeeService.updateEmployee(employeeId,updateEmployee);
-
-
+}
+@Test(enabled = false)
+    public void deleteEmployee(){
+    String file ="employee.json";
+    Employees employees= employeeService.readAFile(file);
+    int employeeId = 2;
+    employeeService.deleteEmployee(employeeId);
 
 
 }
+
 }
 
