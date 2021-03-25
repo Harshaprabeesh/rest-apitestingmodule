@@ -8,16 +8,15 @@ import org.testng.annotations.Test;
 
 public class EmployeeTest {
 private ObjectMapper mapper  = new ObjectMapper();
+    EmployeeService employeeService =new EmployeeService();
+
 //moved to common class service
 //private String baseURI ="http://jsonplaceholder.typicode.com";
 //private String basePath = "/posts";
- @Test
+ @Test(enabled = false)
     public void saveANewEmployee() {
 
         String file ="employee.json";
-
-
-    EmployeeService employeeService =new EmployeeService();
      Employees employees= employeeService.readAFile(file);
      employeeService.saveNewEmployee(employees);
 
@@ -57,6 +56,25 @@ private ObjectMapper mapper  = new ObjectMapper();
 
   }
 
+@Test
+    public void updateEmployee(){
+    String file ="employee.json";
+    Employees employees= employeeService.readAFile(file);
+    employeeService.saveNewEmployee(employees);
+//    Employees updateEmployee = new Employees();
+//    updateEmployee.setTitle("update Title");
+//    updateEmployee.setBody("Update Body");
+//    updateEmployee.setId(1);
+    Employees updateEmployee = Employees.builder()
+                                .body("Update Title second time")
+                                .title("update Title second time")
+                                .build();
+    int employeeId = 1;
+    employeeService.updateEmployee(employeeId,updateEmployee);
 
+
+
+
+}
 }
 
